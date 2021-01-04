@@ -1,7 +1,11 @@
 package at.fhv.sysarch.lab4.Events;
 
 import at.fhv.sysarch.lab4.Domain.Guest;
+import at.fhv.sysarch.lab4.Projector.BookingProjector;
+
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 public class BookingCreatedEvent extends Event{
 

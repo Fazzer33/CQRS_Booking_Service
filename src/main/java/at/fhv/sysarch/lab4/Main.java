@@ -3,6 +3,7 @@ package at.fhv.sysarch.lab4;
 import at.fhv.sysarch.lab4.Aggregate.BookingAggregate;
 import at.fhv.sysarch.lab4.Commands.CreateBooking;
 import at.fhv.sysarch.lab4.Domain.Guest;
+import at.fhv.sysarch.lab4.Events.EventPublisher;
 import at.fhv.sysarch.lab4.Events.EventStore;
 import at.fhv.sysarch.lab4.Projector.BookingProjector;
 import at.fhv.sysarch.lab4.Repository.BookingReadRepository;
@@ -21,11 +22,16 @@ public class Main {
 
             Guest guest = new Guest("Fabian", "Strasse3", myDate);
 
+            EventPublisher publisher = new EventPublisher();
+
             EventStore eventStore = new EventStore();
             BookingAggregate bookingAggregate = new BookingAggregate(eventStore);
 
             BookingReadRepository readRepository = new BookingReadRepository();
             BookingProjector bookingProjector = new BookingProjector(readRepository);
+
+            publisher.subscribe(bookingProjector);
+
             bookingProjector.project(bookingAggregate.handleCreateBooking(
                     new CreateBooking("1", formatter.parse("2021-01-01 12:00:00"),
                             formatter.parse("2021-02-01 12:00:00"), "1", guest)));
