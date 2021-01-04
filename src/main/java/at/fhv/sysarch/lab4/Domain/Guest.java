@@ -1,6 +1,6 @@
 package at.fhv.sysarch.lab4.Domain;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class Guest {
 

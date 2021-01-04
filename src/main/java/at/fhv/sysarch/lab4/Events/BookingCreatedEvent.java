@@ -1,28 +1,20 @@
-package at.fhv.sysarch.lab4.Domain;
+package at.fhv.sysarch.lab4.Events;
 
+import at.fhv.sysarch.lab4.Domain.Guest;
 import java.util.Date;
 
-public class Booking {
-    private String bookingId;
+public class BookingCreatedEvent extends Event{
+
     private Date startDate;
     private Date endDate;
     private String roomNumber;
     private Guest guest;
 
-    public Booking(String bookingId, Date startDate, Date endDate, String roomNumber, Guest guest) {
-        this.bookingId = bookingId;
+    public BookingCreatedEvent(Date startDate, Date endDate, String roomNumber, Guest guest) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.roomNumber = roomNumber;
         this.guest = guest;
-    }
-
-    public String getBookingId() {
-        return bookingId;
-    }
-
-    public void setBookingId(String bookingId) {
-        this.bookingId = bookingId;
     }
 
     public Date getStartDate() {

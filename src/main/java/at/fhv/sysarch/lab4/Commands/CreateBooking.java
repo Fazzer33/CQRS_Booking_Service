@@ -1,15 +1,18 @@
-package at.fhv.sysarch.lab4.Domain;
+package at.fhv.sysarch.lab4.Commands;
+
+import at.fhv.sysarch.lab4.Domain.Guest;
 
 import java.util.Date;
 
-public class Booking {
+
+public class CreateBooking {
     private String bookingId;
     private Date startDate;
     private Date endDate;
     private String roomNumber;
     private Guest guest;
 
-    public Booking(String bookingId, Date startDate, Date endDate, String roomNumber, Guest guest) {
+    public CreateBooking(String bookingId, Date startDate, Date endDate, String roomNumber, Guest guest) {
         this.bookingId = bookingId;
         this.startDate = startDate;
         this.endDate = endDate;
