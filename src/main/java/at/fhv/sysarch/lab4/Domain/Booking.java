@@ -56,4 +56,15 @@ public class Booking {
     public void setGuest(Guest guest) {
         this.guest = guest;
     }
+
+    @Override
+    public String toString() {
+        return "Booking{" +
+                "bookingId='" + bookingId + '\'' +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", roomNumber='" + roomNumber + '\'' +
+                ", guest=" + guest +
+                '}';
+    }
 }

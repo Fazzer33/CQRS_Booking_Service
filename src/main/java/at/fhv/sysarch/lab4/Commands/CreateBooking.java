@@ -5,7 +5,7 @@ import at.fhv.sysarch.lab4.Domain.Guest;
 import java.util.Date;
 
 
-public class CreateBooking {
+public class CreateBooking implements ICommand {
     private String bookingId;
     private Date startDate;
     private Date endDate;

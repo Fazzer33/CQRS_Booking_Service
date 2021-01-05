@@ -2,7 +2,7 @@ package at.fhv.sysarch.lab4.Domain;
 
 public class Room {
     private int roomNumber;
-    private boolean isFree = false;
+    private boolean isFree = true;
 
     public Room(int roomNumber) {
         this.roomNumber = roomNumber;

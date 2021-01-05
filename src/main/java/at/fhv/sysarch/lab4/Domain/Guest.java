@@ -37,4 +37,13 @@ public class Guest {
     public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
     }
+
+    @Override
+    public String toString() {
+        return "Guest{" +
+                "name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", birthDate=" + birthDate +
+                '}';
+    }
 }
