@@ -21,6 +21,4 @@ public class BookingAggregate {
         writeRepository.addEvent(command.getBookingId(), event);
         return Arrays.asList(event);
     }
-
-
 }

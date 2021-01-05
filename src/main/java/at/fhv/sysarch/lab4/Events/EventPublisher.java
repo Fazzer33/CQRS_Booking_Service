@@ -5,6 +5,9 @@ import at.fhv.sysarch.lab4.Projector.BookingProjector;
 import java.util.LinkedList;
 import java.util.List;
 
+// https://medium.com/easyread/create-your-own-java-pubsub-library-fbee21d0bb44
+
+
 public class EventPublisher {
     private List<BookingProjector> subscribers = new LinkedList<>();
 
