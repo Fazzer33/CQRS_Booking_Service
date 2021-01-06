@@ -1,5 +1,6 @@
 package at.fhv.sysarch.lab4.Aggregate;
 
+import at.fhv.sysarch.lab4.Commands.CancelBooking;
 import at.fhv.sysarch.lab4.Commands.CreateBooking;
 import at.fhv.sysarch.lab4.Events.BookingCreatedEvent;
 import at.fhv.sysarch.lab4.Events.Event;
@@ -17,8 +18,12 @@ public class BookingAggregate {
 
     public List<Event> handleCreateBooking(CreateBooking command) {
         BookingCreatedEvent event = new BookingCreatedEvent(command.getStartDate(), command.getEndDate(),
-                command.getRoomNumber(), command.getGuest());
+                command.getRoomNumber(), command.getBookingId(), command.getGuest());
         writeRepository.addEvent(command.getBookingId(), event);
         return Arrays.asList(event);
+    }
+
+    public List<Event> handleCancelBooking(CancelBooking command) {
+        return null;
     }
 }

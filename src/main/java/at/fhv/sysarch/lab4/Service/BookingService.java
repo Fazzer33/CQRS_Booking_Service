@@ -7,19 +7,19 @@ import at.fhv.sysarch.lab4.Events.BookingCreatedEvent;
 import at.fhv.sysarch.lab4.Events.EventPublisher;
 import at.fhv.sysarch.lab4.Events.EventStore;
 import at.fhv.sysarch.lab4.Repository.RoomReadRepository;
+
+import java.time.LocalDate;
 import java.util.Date;
 
 
 public class BookingService {
 
-    private EventStore repository;
     private RoomReadRepository roomReadRepository = new RoomReadRepository();
 
-    public BookingService(EventStore repository) {
-        this.repository = repository;
+    public BookingService() {
     }
 
-    public void createBooking(String bookingId, Date startDate, Date endDate, String roomNumber, Guest guest) {
+    public void createBooking(String bookingId, LocalDate startDate, LocalDate endDate, String roomNumber, Guest guest) {
         Room room = roomReadRepository.getRoomById(roomNumber);
         System.out.println(room.isFree());
         if (room.isFree()) {

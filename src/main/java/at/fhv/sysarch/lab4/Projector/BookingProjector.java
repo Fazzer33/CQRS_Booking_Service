@@ -22,7 +22,7 @@ public class BookingProjector {
     }
 
     private void apply(BookingCreatedEvent event) {
-        Booking booking = new Booking(event.id.toString(), event.getStartDate(), event.getEndDate(), event.getRoomNumber(), event.getGuest());
+        Booking booking = new Booking(event.getBookingId(), event.getStartDate(), event.getEndDate(), event.getRoomNumber(), event.getGuest());
         readRepository.addBooking(booking);
     }
 }

@@ -2,17 +2,16 @@ package at.fhv.sysarch.lab4.Commands;
 
 import at.fhv.sysarch.lab4.Domain.Guest;
 
-import java.util.Date;
-
+import java.time.LocalDate;
 
 public class CreateBooking implements ICommand {
     private String bookingId;
-    private Date startDate;
-    private Date endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private String roomNumber;
     private Guest guest;
 
-    public CreateBooking(String bookingId, Date startDate, Date endDate, String roomNumber, Guest guest) {
+    public CreateBooking(String bookingId, LocalDate startDate, LocalDate endDate, String roomNumber, Guest guest) {
         this.bookingId = bookingId;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -28,19 +27,19 @@ public class CreateBooking implements ICommand {
         this.bookingId = bookingId;
     }
 
-    public Date getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 

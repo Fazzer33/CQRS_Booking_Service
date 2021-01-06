@@ -3,37 +3,40 @@ package at.fhv.sysarch.lab4.Events;
 import at.fhv.sysarch.lab4.Domain.Guest;
 import at.fhv.sysarch.lab4.Projector.BookingProjector;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
 public class BookingCreatedEvent extends Event{
 
-    private Date startDate;
-    private Date endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private String roomNumber;
+    private String bookingId;
     private Guest guest;
 
-    public BookingCreatedEvent(Date startDate, Date endDate, String roomNumber, Guest guest) {
+    public BookingCreatedEvent(LocalDate startDate, LocalDate endDate, String roomNumber, String bookingId, Guest guest) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.roomNumber = roomNumber;
+        this.bookingId = bookingId;
         this.guest = guest;
     }
 
-    public Date getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 
@@ -51,5 +54,13 @@ public class BookingCreatedEvent extends Event{
 
     public void setGuest(Guest guest) {
         this.guest = guest;
+    }
+
+    public String getBookingId() {
+        return bookingId;
+    }
+
+    public void setBookingId(String bookingId) {
+        this.bookingId = bookingId;
     }
 }
