@@ -30,11 +30,9 @@ public class MainWindow extends Application {
         try {
             String DEFAULT_PATTERN = "yyyy-MM-dd HH:mm:ss";
 
-            String dateString = "1997-02-01 12:00:00";
             DateFormat formatter = new SimpleDateFormat(DEFAULT_PATTERN);
-            Date myDate = formatter.parse(dateString);
 
-            Guest guest = new Guest("Fabian", "Strasse3", myDate);
+            Guest guest = new Guest("Fabian", "Strasse3");
             EventStore eventStore = new EventStore();
             EventPublisher publisher = new EventPublisher();
 

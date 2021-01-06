@@ -6,12 +6,10 @@ public class Guest {
 
     private String name;
     private String address;
-    private Date birthDate;
 
-    public Guest(String name, String address, Date birthDate) {
+    public Guest(String name, String address) {
         this.name = name;
         this.address = address;
-        this.birthDate = birthDate;
     }
 
     public String getName() {
@@ -30,20 +28,11 @@ public class Guest {
         this.address = address;
     }
 
-    public Date getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
-    }
-
     @Override
     public String toString() {
         return "Guest{" +
                 "name='" + name + '\'' +
                 ", address='" + address + '\'' +
-                ", birthDate=" + birthDate +
                 '}';
     }
 }
