@@ -1,7 +1,6 @@
 package at.fhv.sysarch.lab4.Repository;
 
 import at.fhv.sysarch.lab4.Domain.Booking;
-
 import java.time.LocalDate;
 import java.util.*;
 
@@ -22,7 +21,6 @@ public class BookingReadRepository {
         for (Booking booking : bookings) {
             if (booking.getStartDate().isAfter(startDate) || booking.getStartDate().isEqual(startDate) &&
                     booking.getEndDate().isBefore(endDate) || booking.getEndDate().isEqual(endDate)) {
-                System.out.println(booking);
                 bookingsByPeriod.add(booking);
             }
         }
