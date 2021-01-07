@@ -1,20 +1,23 @@
 package at.fhv.sysarch.lab4.Domain;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class Room {
-    private int roomNumber;
+    private String roomNumber;
     private boolean isFree = true;
     private int persons;
 
-    public Room(int roomNumber, int persons) {
+    public Room(String roomNumber, int persons) {
         this.roomNumber = roomNumber;
         this.persons = persons;
     }
 
-    public int getRoomNumber() {
+    public String getRoomNumber() {
         return roomNumber;
     }
 
-    public void setRoomNumber(int roomNumber) {
+    public void setRoomNumber(String roomNumber) {
         this.roomNumber = roomNumber;
     }
 
@@ -33,4 +36,5 @@ public class Room {
     public void setPersons(int persons) {
         this.persons = persons;
     }
+
 }

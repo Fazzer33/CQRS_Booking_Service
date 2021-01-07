@@ -7,8 +7,10 @@ import at.fhv.sysarch.lab4.Domain.Room;
 import at.fhv.sysarch.lab4.Events.EventPublisher;
 import at.fhv.sysarch.lab4.Facade;
 import at.fhv.sysarch.lab4.Projections.BookingProjection;
+import at.fhv.sysarch.lab4.Projections.RoomProjection;
 import at.fhv.sysarch.lab4.Projector.BookingProjector;
 import at.fhv.sysarch.lab4.Queries.GetBookings;
+import at.fhv.sysarch.lab4.Queries.GetFreeRooms;
 import at.fhv.sysarch.lab4.Service.BookingService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -30,6 +32,7 @@ public class MainWindowController {
     private BookingProjector bookingProjector = new BookingProjector(facade);
     // read
     private BookingProjection bookingProjection = new BookingProjection(facade);
+    private RoomProjection roomProjection = new RoomProjection(facade);
     private int bookingId = 1;
     private LocalDate bookingStartDate;
 
@@ -103,7 +106,7 @@ public class MainWindowController {
     private DatePicker getRoomsEnd;
 
     @FXML
-    private ComboBox<String> personsPicker;
+    private ComboBox<Integer> personsPicker;
 
     @FXML
     void bookRoomAction(ActionEvent event) {
@@ -143,7 +146,11 @@ public class MainWindowController {
 
     @FXML
     void getRoomsAction(ActionEvent event) {
-
+        List<Room> rooms = roomProjection.handle(new GetFreeRooms(getRoomsStart.getValue(), getRoomsEnd.getValue(), 1));
+        for (Room r :
+                rooms) {
+            consoleField.appendText("Room " + r.getRoomNumber() + " is free\n");
+        }
     }
 
     private String getBookingId() {

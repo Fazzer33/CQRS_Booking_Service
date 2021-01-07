@@ -8,7 +8,7 @@ public class Facade {
 
     private EventStore eventStore = new EventStore();
     private BookingReadRepository bookingReadRepository = new BookingReadRepository();
-    private RoomReadRepository roomReadRepository = new RoomReadRepository();
+    private RoomReadRepository roomReadRepository = new RoomReadRepository(this);
 
     public Facade() {
     }
