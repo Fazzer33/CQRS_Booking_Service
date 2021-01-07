@@ -1,3 +1,5 @@
+Implementierung erfolgt nach Vorlesungsfolien und https://www.baeldung.com/cqrs-event-sourcing-java 
+
 # CQRS_Booking_Service
 - gradle run um das Programm zu starten (JavaFX UI)
 - Book Room: Raum Nummer wird beim Buchen je nach Datum automatisch angezeigt wenn verfügbar (wenn bereits vergeben kann man den Raum nicht auswählen)
