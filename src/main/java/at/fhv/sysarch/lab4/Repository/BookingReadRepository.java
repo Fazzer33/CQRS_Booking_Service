@@ -22,6 +22,7 @@ public class BookingReadRepository {
         for (Booking booking : bookings) {
             if (booking.getStartDate().isAfter(startDate) || booking.getStartDate().isEqual(startDate) &&
                     booking.getEndDate().isBefore(endDate) || booking.getEndDate().isEqual(endDate)) {
+                System.out.println(booking);
                 bookingsByPeriod.add(booking);
             }
         }

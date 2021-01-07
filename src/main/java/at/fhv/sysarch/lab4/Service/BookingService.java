@@ -7,8 +7,8 @@ import at.fhv.sysarch.lab4.Domain.Guest;
 import at.fhv.sysarch.lab4.Domain.Room;
 import at.fhv.sysarch.lab4.Events.EventPublisher;
 import at.fhv.sysarch.lab4.Facade;
-import at.fhv.sysarch.lab4.Repository.BookingReadRepository;
-import at.fhv.sysarch.lab4.Repository.RoomReadRepository;
+import javafx.scene.control.Alert;
+
 import java.time.LocalDate;
 
 public class BookingService {
@@ -20,14 +20,8 @@ public class BookingService {
     }
 
     public void createBooking(String bookingId, LocalDate startDate, LocalDate endDate, String roomNumber, Guest guest) {
-        Room room = facade.getRoomReadRepository().getRoomById(roomNumber);
-        System.out.println(room.isFree());
-        if (room.isFree()) {
-            System.out.println("Room is free");
+        if (startDate != null && endDate != null && guest != null) {
             EventPublisher.publish(new CreateBooking(bookingId, startDate, endDate, roomNumber, guest));
-
-        } else {
-            System.out.println("Room is not free");
         }
     }
 
@@ -36,8 +30,6 @@ public class BookingService {
             Booking booking = facade.getBookingReadRepository().getBookingByBookingId(bookingId);
             EventPublisher.publish(new CancelBooking(bookingId));
             return booking;
-        } else {
-            System.out.println("Booking doesn't exist");
         }
         return null;
     }

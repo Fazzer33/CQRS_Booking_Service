@@ -36,9 +36,10 @@ public class RoomReadRepository {
     public List<Room> getAllFreeRoomsByPeriodAndPerson(LocalDate startDate, LocalDate endDate, int persons) {
         List<Room> availableRooms = getRoomsByPerson(persons);
         List<Booking> bookingByPeriod = facade.getBookingReadRepository().getBookingByPeriod(startDate, endDate);
-        for (Room r : availableRooms) {
-            for (Booking b : bookingByPeriod) {
-                if (r.getRoomNumber().equals(b.getRoomNumber())){
+
+        for (Booking b : bookingByPeriod) {
+            for (Room r : availableRooms) {
+                if (r.getRoomNumber().equals(b.getRoomNumber())) {
                     availableRooms.remove(r);
                 }
             }

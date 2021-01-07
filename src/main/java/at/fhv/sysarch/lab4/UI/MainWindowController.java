@@ -39,6 +39,8 @@ public class MainWindowController {
     @FXML
     private void initialize() {
         publisher.subscribe(bookingAggregate);
+        ObservableList<Integer> personList = FXCollections.observableArrayList(1, 2, 3, 4);
+        personsPicker.setItems(personList);
         bookRoomStart.valueProperty().addListener(((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 bookingStartDate = newValue;
@@ -51,7 +53,6 @@ public class MainWindowController {
                 list.addAll(rooms.keySet());
                 List<Booking> bookings = facade.getBookingReadRepository().getBookingByPeriod(bookingStartDate, newValue);
                 for (Booking booking: bookings) {
-                    System.out.println(booking.getRoomNumber());
                     list.remove(booking.getRoomNumber());
                 }
 
@@ -110,47 +111,85 @@ public class MainWindowController {
 
     @FXML
     void bookRoomAction(ActionEvent event) {
-        String bookingId = getBookingId();
-        bookingService.createBooking(bookingId, bookRoomStart.getValue(), bookRoomEnd.getValue(),
-                roomSelection.getValue(), new Guest(nameField.getText(), addressField.getText()));
-        bookingProjector.project(facade.getEventStore().getEvents(bookingId));
-        consoleField.appendText("Booking complete\n");
-        consoleField.appendText(facade.getBookingReadRepository().getBookingByBookingId(bookingId).toString()+ "\n\n");
+        try {
+            String bookingId = getBookingId();
+            bookingService.createBooking(bookingId, bookRoomStart.getValue(), bookRoomEnd.getValue(),
+                    roomSelection.getValue(), new Guest(nameField.getText(), addressField.getText()));
+            bookingProjector.project(facade.getEventStore().getEvents(bookingId));
+            consoleField.appendText("Booking complete\n");
+            consoleField.appendText(facade.getBookingReadRepository().getBookingByBookingId(bookingId).toString()+ "\n\n");
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Warning");
+            alert.setHeaderText("Please add values to all fields");
+            alert.showAndWait();
+        }
         bookRoomStart.setValue(null);
         bookRoomEnd.setValue(null);
+        nameField.clear();
+        addressField.clear();
     }
 
     @FXML
     void cancelBookingAction(ActionEvent event) {
-        Booking booking = bookingService.cancelBooking(reservationNrField.getText());
-        if (facade.getEventStore().getEvents(booking.getBookingId()) != null) {
-            bookingProjector.project(facade.getEventStore().getEvents(booking.getBookingId()));
+        if (!reservationNrField.getText().equals("")) {
+            Booking booking = bookingService.cancelBooking(reservationNrField.getText());
+
+            try {
+                bookingProjector.project(facade.getEventStore().getEvents(booking.getBookingId()));
+                consoleField.appendText("Booking with id: "+booking.getBookingId() +" got canceled\n\n");
+                reservationNrField.clear();
+                bookRoomStart.setValue(null);
+                bookRoomEnd.setValue(null);
+            } catch (Exception e) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Warning");
+                alert.setHeaderText("There is no booking with id:" +reservationNrField.getText());
+                alert.setContentText("Booking id is: booking: NR");
+                alert.showAndWait();
+                reservationNrField.clear();
+            }
         }
-        consoleField.appendText("Booking with id: "+booking.getBookingId() +" got canceled\n\n");
-        reservationNrField.clear();
-        bookRoomStart.setValue(null);
-        bookRoomEnd.setValue(null);
     }
 
     @FXML
     void getBookingsAction(ActionEvent event) {
-        List<Booking> bookings = bookingProjection.handle(new GetBookings(getBookingsStart.getValue(),
-                getBookingsEnd.getValue()));
+        if (getBookingsStart.getEditor().getText().equals("") || getBookingsEnd.getEditor().getText().equals("") ) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Warning");
+            alert.setHeaderText("Please add values to all fields");
+            alert.showAndWait();
+        } else {
+            List<Booking> bookings = bookingProjection.handle(new GetBookings(getBookingsStart.getValue(),
+                    getBookingsEnd.getValue()));
 
-        consoleField.appendText("Booking in your requested period\n");
-        for (Booking booking : bookings) {
-            consoleField.appendText(booking.toString()+"\n");
+            consoleField.appendText("Booking in your requested period\n");
+            for (Booking booking : bookings) {
+                consoleField.appendText(booking.toString()+"\n");
+            }
+            consoleField.appendText("\n");
         }
-        consoleField.appendText("\n");
     }
 
     @FXML
     void getRoomsAction(ActionEvent event) {
-        List<Room> rooms = roomProjection.handle(new GetFreeRooms(getRoomsStart.getValue(), getRoomsEnd.getValue(), 1));
-        for (Room r :
-                rooms) {
-            consoleField.appendText("Room " + r.getRoomNumber() + " is free\n");
+        if (!getRoomsStart.getEditor().getText().equals("") && !getRoomsEnd.getEditor().getText().equals("") && personsPicker.getValue() != null) {
+            List<Room> rooms = roomProjection.handle(new GetFreeRooms(getRoomsStart.getValue(), getRoomsEnd.getValue(), personsPicker.getValue()));
+            for (Room r :
+                    rooms) {
+                consoleField.appendText("Room " + r.getRoomNumber() + " is free\n");
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Warning");
+            alert.setHeaderText("Please add values to all fields");
+            alert.showAndWait();
         }
+    }
+
+    @FXML
+    void clearTextArea(ActionEvent event) {
+        consoleField.clear();
     }
 
     private String getBookingId() {

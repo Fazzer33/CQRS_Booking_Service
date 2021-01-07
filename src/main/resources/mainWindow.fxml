@@ -7,13 +7,13 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.fhv.sysarch.lab4.UI.MainWindowController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="468.0" prefWidth="768.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.fhv.sysarch.lab4.UI.MainWindowController">
    <children>
       <Button fx:id="bookRoomButton" layoutX="397.0" layoutY="72.0" mnemonicParsing="false" onAction="#bookRoomAction" text="Book Room" />
       <Button fx:id="cancelBookingButton" layoutX="144.0" layoutY="122.0" mnemonicParsing="false" onAction="#cancelBookingAction" text="Cancel Booking" />
       <Button fx:id="getBookingsButton" layoutX="317.0" layoutY="164.0" mnemonicParsing="false" onAction="#getBookingsAction" text="Get Bookings" />
       <Button fx:id="getRoomsButton" layoutX="416.0" layoutY="194.0" mnemonicParsing="false" onAction="#getRoomsAction" text="Get Free Rooms" />
-      <TextArea fx:id="consoleField" layoutX="30.0" layoutY="227.0" prefHeight="147.0" prefWidth="540.0" AnchorPane.bottomAnchor="26.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="227.0" />
+      <TextArea fx:id="consoleField" layoutX="30.0" layoutY="259.0" prefHeight="183.0" prefWidth="708.0" AnchorPane.bottomAnchor="26.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="259.0" />
       <TextField fx:id="addressField" layoutX="144.0" layoutY="72.0" prefHeight="25.0" prefWidth="99.0" promptText="Address" />
       <TextField fx:id="nameField" layoutX="33.0" layoutY="73.0" prefHeight="25.0" prefWidth="99.0" promptText="Name" />
       <DatePicker fx:id="bookRoomStart" layoutX="32.0" layoutY="37.0" prefHeight="25.0" prefWidth="101.0" promptText="From" />
@@ -25,5 +25,6 @@
       <DatePicker fx:id="getRoomsStart" layoutX="32.0" layoutY="194.0" prefHeight="25.0" prefWidth="129.0" promptText="From" />
       <DatePicker fx:id="getRoomsEnd" layoutX="171.0" layoutY="194.0" prefHeight="25.0" prefWidth="129.0" promptText="To" />
       <ComboBox fx:id="personsPicker" layoutX="317.0" layoutY="194.0" prefHeight="25.0" prefWidth="87.0" promptText="Persons" visibleRowCount="4" />
+      <Button fx:id="clearTextAreaButton" layoutX="645.0" layoutY="222.0" mnemonicParsing="false" onAction="#clearTextArea" text="Clear TextArea" />
    </children>
 </AnchorPane>

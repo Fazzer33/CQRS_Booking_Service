@@ -1,7 +1,6 @@
 package at.fhv.sysarch.lab4.Queries;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 public class GetBookings {
     private LocalDate startDate;
