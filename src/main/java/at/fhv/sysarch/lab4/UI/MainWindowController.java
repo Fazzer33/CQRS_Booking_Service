@@ -123,7 +123,7 @@ public class MainWindowController {
         if (facade.getEventStore().getEvents(booking.getBookingId()) != null) {
             bookingProjector.project(facade.getEventStore().getEvents(booking.getBookingId()));
         }
-        consoleField.appendText("Booking with id: "+booking.getBookingId() +"got canceled\n\n");
+        consoleField.appendText("Booking with id: "+booking.getBookingId() +" got canceled\n\n");
         reservationNrField.clear();
         bookRoomStart.setValue(null);
         bookRoomEnd.setValue(null);
