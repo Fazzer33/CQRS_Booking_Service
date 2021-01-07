@@ -3,6 +3,7 @@ package at.fhv.sysarch.lab4.UI;
 import at.fhv.sysarch.lab4.Aggregate.BookingAggregate;
 import at.fhv.sysarch.lab4.Domain.Booking;
 import at.fhv.sysarch.lab4.Domain.Guest;
+import at.fhv.sysarch.lab4.Domain.Room;
 import at.fhv.sysarch.lab4.Events.EventPublisher;
 import at.fhv.sysarch.lab4.Facade;
 import at.fhv.sysarch.lab4.Projections.BookingProjection;
@@ -15,24 +16,45 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 public class MainWindowController {
 
     private Facade facade = new Facade();
-    private BookingService bookingService = new BookingService();
+    private BookingService bookingService = new BookingService(facade);
     private EventPublisher publisher = new EventPublisher();
-    private BookingAggregate bookingAggregate = new BookingAggregate(facade.getEventStore());
+    private BookingAggregate bookingAggregate = new BookingAggregate(facade);
     // write
-    private BookingProjector bookingProjector = new BookingProjector(facade.getBookingReadRepository());
+    private BookingProjector bookingProjector = new BookingProjector(facade);
     // read
-    private BookingProjection bookingProjection = new BookingProjection(facade.getBookingReadRepository());
+    private BookingProjection bookingProjection = new BookingProjection(facade);
     private int bookingId = 1;
+    private LocalDate bookingStartDate;
 
     @FXML
     private void initialize() {
         publisher.subscribe(bookingAggregate);
-        roomSelection.setItems(FXCollections.observableArrayList("1", "2", "3", "4", "5", "6"));
+        bookRoomStart.valueProperty().addListener(((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                bookingStartDate = newValue;
+            }
+        }));
+        bookRoomEnd.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                Map<String, Room> rooms = facade.getRoomReadRepository().getAllFreeRooms();
+                ObservableList<String> list = FXCollections.observableArrayList();
+                list.addAll(rooms.keySet());
+                List<Booking> bookings = facade.getBookingReadRepository().getBookingByPeriod(bookingStartDate, newValue);
+                for (Booking booking: bookings) {
+                    System.out.println(booking.getRoomNumber());
+                    list.remove(booking.getRoomNumber());
+                }
+
+                roomSelection.setItems(FXCollections.observableArrayList(list));
+            }
+        });
     }
 
     @FXML
@@ -89,8 +111,22 @@ public class MainWindowController {
         bookingService.createBooking(bookingId, bookRoomStart.getValue(), bookRoomEnd.getValue(),
                 roomSelection.getValue(), new Guest(nameField.getText(), addressField.getText()));
         bookingProjector.project(facade.getEventStore().getEvents(bookingId));
-        consoleField.appendText("Booking complete");
-        System.out.println();
+        consoleField.appendText("Booking complete\n");
+        consoleField.appendText(facade.getBookingReadRepository().getBookingByBookingId(bookingId).toString()+ "\n\n");
+        bookRoomStart.setValue(null);
+        bookRoomEnd.setValue(null);
+    }
+
+    @FXML
+    void cancelBookingAction(ActionEvent event) {
+        Booking booking = bookingService.cancelBooking(reservationNrField.getText());
+        if (facade.getEventStore().getEvents(booking.getBookingId()) != null) {
+            bookingProjector.project(facade.getEventStore().getEvents(booking.getBookingId()));
+        }
+        consoleField.appendText("Booking with id: "+booking.getBookingId() +"got canceled\n\n");
+        reservationNrField.clear();
+        bookRoomStart.setValue(null);
+        bookRoomEnd.setValue(null);
     }
 
     @FXML
@@ -98,11 +134,11 @@ public class MainWindowController {
         List<Booking> bookings = bookingProjection.handle(new GetBookings(getBookingsStart.getValue(),
                 getBookingsEnd.getValue()));
 
+        consoleField.appendText("Booking in your requested period\n");
         for (Booking booking : bookings) {
-            consoleField.appendText(booking.toString());
-            System.out.println();
+            consoleField.appendText(booking.toString()+"\n");
         }
-
+        consoleField.appendText("\n");
     }
 
     @FXML

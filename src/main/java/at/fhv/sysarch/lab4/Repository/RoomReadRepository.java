@@ -1,6 +1,9 @@
 package at.fhv.sysarch.lab4.Repository;
 
 import at.fhv.sysarch.lab4.Domain.Room;
+
+import java.time.LocalDate;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,4 +26,9 @@ public class RoomReadRepository {
     public Room getRoomById(String id) {
         return roomsStore.get(id);
     }
+
+    public Map<String, Room> getAllFreeRooms() {
+        return roomsStore;
+    }
+
 }

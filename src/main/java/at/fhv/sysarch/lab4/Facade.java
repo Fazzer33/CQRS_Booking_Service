@@ -2,11 +2,13 @@ package at.fhv.sysarch.lab4;
 
 import at.fhv.sysarch.lab4.Events.EventStore;
 import at.fhv.sysarch.lab4.Repository.BookingReadRepository;
+import at.fhv.sysarch.lab4.Repository.RoomReadRepository;
 
 public class Facade {
 
     private EventStore eventStore = new EventStore();
     private BookingReadRepository bookingReadRepository = new BookingReadRepository();
+    private RoomReadRepository roomReadRepository = new RoomReadRepository();
 
     public Facade() {
     }
@@ -21,5 +23,9 @@ public class Facade {
 
     public BookingReadRepository getBookingReadRepository() {
         return bookingReadRepository;
+    }
+
+    public RoomReadRepository getRoomReadRepository() {
+        return roomReadRepository;
     }
 }

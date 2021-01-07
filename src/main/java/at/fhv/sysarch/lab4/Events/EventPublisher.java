@@ -27,7 +27,7 @@ public class EventPublisher {
         }
         if (command instanceof CancelBooking) {
             for (BookingAggregate subscriber : subscribers) {
-//                subscriber((CancelBooking) command);
+                subscriber.handleCancelBooking((CancelBooking) command);
             }
         }
 

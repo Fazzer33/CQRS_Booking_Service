@@ -1,9 +1,10 @@
-package at.fhv.sysarch.lab4.Commands;
+package at.fhv.sysarch.lab4.Events;
 
-public class CancelBooking implements ICommand{
+public class BookingCancelEvent extends Event {
+
     private String bookingId;
 
-    public CancelBooking(String bookingId) {
+    public BookingCancelEvent(String bookingId) {
         this.bookingId = bookingId;
     }
 
